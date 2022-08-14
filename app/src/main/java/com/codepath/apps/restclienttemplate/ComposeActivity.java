@@ -24,10 +24,12 @@ import okhttp3.Headers;
 public class ComposeActivity extends AppCompatActivity {
 
     public static final String TAG = "ComposeActivity";
-    public static final int MAX_TWEET_LENGTH = 140;
+    public static final int MAX_TWEET_LENGTH = 280;
 
     EditText etCompose;
     Button btnTweet;
+
+    TextView tvDisplay;
 
     TwitterClient client;
 
@@ -39,7 +41,30 @@ public class ComposeActivity extends AppCompatActivity {
         client = TwitterApp.getRestClient(this);
 
         etCompose = findViewById(R.id.etCompose);
+        tvDisplay = findViewById(R.id.tvDisplay);
         btnTweet = findViewById(R.id.btnTweet);
+
+        etCompose.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Fires right as the text is being changed (even supplies the range of text)
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                // Fires right before text is changing
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Fires right after the text has changed
+                int l = s.length();
+                int c = 280 - l;
+
+                tvDisplay.setText(String.valueOf(c));
+            }
+        });
         
 
 
